@@ -189,3 +189,260 @@ ATS_GENAI/
 ## Notes
 
 This project is modular by design so it can grow into a production-ready ATS without changing the core architecture.
+
+
+
+
+
+# VectorHire AI — Overall System Architecture
+
+```mermaid
+flowchart TB
+
+    subgraph CLIENTS["Client Applications"]
+        A1[Student Portal]
+        A2[Recruiter Portal]
+        A3[Admin Dashboard]
+    end
+
+    subgraph FRONTEND["Frontend Layer - React + Tailwind"]
+        B1[Authentication UI]
+        B2[ATS Dashboard]
+        B3[Resume Upload UI]
+        B4[Coding Platform]
+        B5[Mock Interview UI]
+        B6[Aptitude Portal]
+        B7[AI Career Assistant]
+        B8[Analytics Dashboard]
+    end
+
+    subgraph API["Backend API Gateway - FastAPI"]
+        C1[Auth Service]
+        C2[Resume Service]
+        C3[Recommendation Service]
+        C4[Interview Service]
+        C5[Coding Service]
+        C6[Aptitude Service]
+        C7[Career AI Service]
+        C8[Analytics Service]
+        C9[Chatbot Service]
+    end
+
+    subgraph NLP["AI & NLP Engine"]
+        D1[Resume Parser]
+        D2[Skill Extraction]
+        D3[NER Engine]
+        D4[Embedding Generator]
+        D5[Similarity Engine]
+        D6[Recommendation Engine]
+        D7[LLM Integration]
+        D8[RAG Pipeline]
+    end
+
+    subgraph EXECUTION["Execution Systems"]
+        E1[Judge0 API]
+        E2[Monaco Code Editor]
+        E3[Voice Processing]
+    end
+
+    subgraph DATABASE["Database Layer"]
+        F1[(MongoDB)]
+        F2[(FAISS Vector DB)]
+        F3[(Redis Cache)]
+    end
+
+    subgraph CLOUD["Cloud & DevOps"]
+        G1[Docker]
+        G2[Nginx]
+        G3[AWS/Azure/GCP]
+        G4[CI/CD Pipeline]
+    end
+
+    CLIENTS --> FRONTEND
+
+    FRONTEND --> API
+
+    API --> NLP
+    API --> EXECUTION
+    API --> DATABASE
+
+    NLP --> F1
+    NLP --> F2
+
+    EXECUTION --> E1
+
+    API --> G1
+    G1 --> G2
+    G2 --> G3
+    G3 --> G4
+```
+
+---
+
+# Overall Working Flow
+
+```mermaid
+flowchart TD
+
+    A[User Registers/Login] --> B{User Type}
+
+    B -->|Student| C[Student Dashboard]
+    B -->|Recruiter| D[Recruiter Dashboard]
+    B -->|Admin| E[Admin Panel]
+
+    %% STUDENT FLOW
+
+    C --> F[Upload Resume]
+
+    F --> G[Resume Parsing]
+    G --> H[Skill Extraction]
+    H --> I[Generate Embeddings]
+    I --> J[Store in Vector DB]
+
+    J --> K[AI Resume Analysis]
+    K --> L[ATS Resume Score]
+
+    L --> M[Job Recommendation Engine]
+    M --> N[Recommended Jobs]
+
+    %% MOCK INTERVIEW FLOW
+
+    C --> O[Start Mock Interview]
+    O --> P[AI Generates Questions]
+    P --> Q[Candidate Answers]
+    Q --> R[LLM Evaluation]
+    R --> S[Interview Feedback & Score]
+
+    %% CODING FLOW
+
+    C --> T[Open Coding Platform]
+    T --> U[Write Code in Monaco Editor]
+    U --> V[Send Code to Judge0]
+    V --> W[Code Execution]
+    W --> X[Test Case Evaluation]
+    X --> Y[Coding Score]
+
+    %% APTITUDE FLOW
+
+    C --> Z[Aptitude Test]
+    Z --> A1[Quiz Evaluation]
+    A1 --> A2[Performance Analytics]
+
+    %% CAREER AI FLOW
+
+    C --> A3[Ask AI Career Assistant]
+    A3 --> A4[RAG + LLM Processing]
+    A4 --> A5[Career Roadmap]
+
+    %% RECRUITER FLOW
+
+    D --> B1[Create Job Posting]
+    B1 --> B2[Generate Job Embeddings]
+
+    B2 --> B3[Candidate Recommendation Engine]
+    B3 --> B4[Top Matching Candidates]
+
+    B4 --> B5[Recruiter Analytics]
+
+    %% FINAL
+
+    S --> C
+    Y --> C
+    A2 --> C
+    A5 --> C
+```
+
+---
+
+# AI Recommendation Engine Flow
+
+```mermaid
+flowchart LR
+
+    A[Resume Text] --> B[Embedding Generation]
+    C[Job Description] --> D[Embedding Generation]
+
+    B --> E[Vector Database]
+    D --> E
+
+    E --> F[Cosine Similarity]
+
+    F --> G[Rank Candidates]
+    F --> H[Recommend Jobs]
+
+    G --> I[Recruiter Dashboard]
+    H --> J[Student Dashboard]
+```
+
+---
+
+# AI Mock Interview Flow
+
+```mermaid
+flowchart TD
+
+    A[Select Interview Role]
+    --> B[LLM Generates Questions]
+
+    B --> C[Student Answers]
+
+    C --> D[AI Evaluation Engine]
+
+    D --> E[Communication Analysis]
+    D --> F[Technical Analysis]
+    D --> G[Confidence Analysis]
+
+    E --> H[Final Interview Score]
+    F --> H
+    G --> H
+
+    H --> I[AI Feedback Report]
+```
+
+---
+
+# Coding Platform Flow
+
+```mermaid
+flowchart TD
+
+    A[Open Coding Problem]
+    --> B[Write Code in Monaco Editor]
+
+    B --> C[Run Code]
+
+    C --> D[Backend API]
+
+    D --> E[Judge0 API]
+
+    E --> F[Compile & Execute]
+
+    F --> G[Return Output]
+
+    G --> H[Test Case Validation]
+
+    H --> I[Accepted / Failed]
+
+    I --> J[Store Submission]
+```
+
+---
+
+# RAG Career Assistant Flow
+
+```mermaid
+flowchart TD
+
+    A[User Query]
+    --> B[Convert to Embeddings]
+
+    B --> C[Search Vector Database]
+
+    C --> D[Retrieve Relevant Context]
+
+    D --> E[LLM Prompt Builder]
+
+    E --> F[GPT/Gemini Response]
+
+    F --> G[Career Guidance Output]
+```
