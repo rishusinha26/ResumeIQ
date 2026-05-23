@@ -220,6 +220,54 @@ ATS_GENAI/
 └── README.md
 ```
 
+
+## overall architecture
+
+```mermaid
+flowchart LR
+	subgraph Frontend
+		F[React + Vite UI]
+	end
+
+	subgraph Backend[FastAPI Backend]
+		API[/api/v1 (APIRouter)]
+		AuthService[Auth Service]
+		ResumeService[Resume & Parser]
+		EmbeddingSvc[Embedding Service]
+		ChatbotSvc[Chatbot / Prompt Engine]
+		RecoSvc[Recommendation Service]
+		VectorMgr[Vector Index Manager]
+	end
+
+	subgraph Data[Persistence & External]
+		Mongo[(MongoDB)]
+		OpenAI[(OpenAI / LLM)]
+		Piston[(Piston - optional)]
+	end
+
+	F -->|HTTP /api| API
+	API --> AuthService
+	API --> ResumeService
+	API --> ChatbotSvc
+	API --> RecoSvc
+	ResumeService --> EmbeddingSvc
+	EmbeddingSvc --> Mongo
+	EmbeddingSvc --> VectorMgr
+	VectorMgr --> Mongo
+	RecoSvc --> VectorMgr
+	ChatbotSvc --> EmbeddingSvc
+	ChatbotSvc --> OpenAI
+	ChatbotSvc --> Mongo
+	AuthService --> Mongo
+	API -->|startup tasks| VectorMgr
+	API -->|startup seed| Mongo
+	ChatbotSvc --> Piston
+
+	style Backend fill:#f8fafc,stroke:#cbd5e1
+	style Data fill:#fff7ed,stroke:#f59e0b
+```
+
+
 ## Future Goals
 
 - Add stronger matching logic and ranking controls.
