@@ -18,17 +18,14 @@ class LLMProvider:
         max_tokens: int = 512,
         temperature: float = 0.7,
     ) -> str:
-        if self.provider != "openai":
-            raise NotImplementedError("Only OpenAI is implemented.")
-
         settings = get_settings()
-        api_key = settings.openai_api_key.strip()
-        if not api_key:
-            raise ValueError(
-                "OPENAI_API_KEY is not set. Add it to backend/.env and restart the server."
-            )
+        return await self._complete_openai(prompt, settings.openai_api_key, model, max_tokens, temperature)
 
-        client = AsyncOpenAI(api_key=api_key)
+    async def _complete_openai(self, prompt: str, api_key: str, model: str, max_tokens: int, temperature: float) -> str:
+        if not api_key.strip():
+            raise ValueError("OPENAI_API_KEY is not set. Add it to backend/.env and restart the server.")
+
+        client = AsyncOpenAI(api_key=api_key.strip())
         response = await client.chat.completions.create(
             model=model,
             messages=[{"role": "user", "content": prompt}],

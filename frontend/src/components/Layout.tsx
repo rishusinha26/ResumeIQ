@@ -17,6 +17,9 @@ const studentNav = [
   { to: '/student/resume', label: 'My Resume' },
   { to: '/student/ats', label: 'ATS Score' },
   { to: '/student/roles', label: 'Suggested Roles' },
+  { to: '/student/dsa', label: 'Company DSA' },
+  { to: '/student/aptitude', label: 'Aptitude Prep' },
+  { to: '/student/career', label: 'Career Assistant' },
   { to: '/student/chatbot', label: 'Resume Coach' },
 ];
 

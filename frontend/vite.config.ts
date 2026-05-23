@@ -2,7 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [react()],
+  // cast to any to avoid TypeScript conflicts when multiple vite versions
+  plugins: [react()] as any,
   server: {
     host: '0.0.0.0',
     port: 5173,

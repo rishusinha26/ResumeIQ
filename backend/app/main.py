@@ -39,11 +39,19 @@ async def startup_event() -> None:
     # Sync FAISS Indices
     try:
         from motor.motor_asyncio import AsyncIOMotorClient
+        from app.services.module_init_service import ensure_module_indexes
         from app.services.vector_sync_service import sync_vector_indices
+        from app.services.seed_service import seed_default_users
         
         client = AsyncIOMotorClient(settings.mongo_uri)
         db = client[settings.mongo_db]
         await sync_vector_indices(db)
+        await ensure_module_indexes(db)
+        # Ensure default development users exist (no-op if present)
+        try:
+            await seed_default_users(db)
+        except Exception:
+            logger.exception("Failed to seed default users")
     except Exception as e:
         logger.error(f"Error syncing FAISS indices: {e}")
 

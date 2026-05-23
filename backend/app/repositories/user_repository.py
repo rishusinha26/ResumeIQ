@@ -1,5 +1,8 @@
 from datetime import datetime
 
+from bson import ObjectId
+from bson.errors import InvalidId
+
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from app.models.user import PublicUser, UserCreateDocument, UserDocument, UserLoginEvent, UserRole
@@ -14,7 +17,20 @@ def _audit_collection(db: AsyncIOMotorDatabase):
 
 
 async def get_user_by_email(db: AsyncIOMotorDatabase, email: str) -> UserDocument | None:
-    record = await _users_collection(db).find_one({"email": email})
+    key = email.strip().lower()
+    record = await _users_collection(db).find_one({"email": key})
+    if not record:
+        return None
+    record["id"] = str(record.pop("_id"))
+    return UserDocument(**record)
+
+
+async def get_user_by_id(db: AsyncIOMotorDatabase, user_id: str) -> UserDocument | None:
+    try:
+        object_id = ObjectId(user_id)
+    except InvalidId:
+        return None
+    record = await _users_collection(db).find_one({"_id": object_id})
     if not record:
         return None
     record["id"] = str(record.pop("_id"))
@@ -41,8 +57,9 @@ async def list_users(db: AsyncIOMotorDatabase) -> list[PublicUser]:
 
 async def update_login_activity(db: AsyncIOMotorDatabase, email: str) -> None:
     now = datetime.utcnow()
+    key = email.strip().lower()
     await _users_collection(db).update_one(
-        {"email": email},
+        {"email": key},
         {"$set": {"last_login_at": now, "updated_at": now}, "$inc": {"login_count": 1}},
     )
 
@@ -73,6 +90,8 @@ async def list_login_events_for_user(db: AsyncIOMotorDatabase, user_id: str, lim
 
 async def create_user(db: AsyncIOMotorDatabase, user: UserCreateDocument) -> UserDocument:
     payload = user.model_dump()
+    # Normalize email to lowercase for consistent lookups
+    payload["email"] = str(payload.get("email", "")).strip().lower()
     result = await _users_collection(db).insert_one(payload)
     return UserDocument(id=str(result.inserted_id), **payload)
 

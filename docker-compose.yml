@@ -8,6 +8,16 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  piston:
+    image: ghcr.io/engineer-man/piston:latest
+    container_name: ats_genai_piston
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "2000:2000"
+    environment:
+      - PISTON_API_PORT=2000
+
   backend:
     build:
       context: ./backend
@@ -25,10 +35,12 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - SPACY_MODEL=${SPACY_MODEL}
       - SENTENCE_TRANSFORMER_MODEL=${SENTENCE_TRANSFORMER_MODEL}
+      - PISTON_API_URL=${PISTON_API_URL}
     ports:
       - "8000:8000"
     depends_on:
       - mongo
+      - piston
 
   frontend:
     build:

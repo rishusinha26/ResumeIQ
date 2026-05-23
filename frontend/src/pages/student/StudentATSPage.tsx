@@ -83,7 +83,7 @@ export default function StudentATSPage() {
                 <p className="mt-2 text-base font-bold text-violet-600 dark:text-violet-400">{selected.suitability}</p>
                 <div className="mt-4 grid grid-cols-2 gap-6 text-sm">
                   <Metric label="Keyword match" value={`${selected.keyword_match_percent}%`} />
-                  <Metric label="AI similarity" value={`${selected.similarity_score}%`} />
+                  <Metric label="Model similarity" value={`${selected.similarity_score}%`} />
                 </div>
               </div>
             </div>

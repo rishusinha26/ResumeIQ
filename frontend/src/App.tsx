@@ -11,6 +11,11 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ChatbotPage } from './pages/ChatbotPage';
 import RecruiterDashboard from './pages/RecruiterDashboard';
+import StudentInterviewPage from './pages/student/StudentInterviewPage';
+import StudentCodingPage from './pages/student/StudentCodingPage';
+import StudentDSAQuestionsPage from './pages/student/StudentDSAQuestionsPage';
+import StudentAptitudePage from './pages/student/StudentAptitudePage';
+import StudentCareerAssistantPage from './pages/student/StudentCareerAssistantPage';
 import StudentATSPage from './pages/student/StudentATSPage';
 import StudentDashboard from './pages/student/StudentDashboard';
 import StudentResumePage from './pages/student/StudentResumePage';
@@ -32,6 +37,11 @@ export default function App() {
           <Route path="student/resume" element={<StudentResumePage />} />
           <Route path="student/ats" element={<StudentATSPage />} />
           <Route path="student/roles" element={<StudentRolesPage />} />
+          <Route path="student/dsa" element={<StudentDSAQuestionsPage />} />
+          <Route path="student/interviews" element={<StudentInterviewPage />} />
+          <Route path="student/coding" element={<StudentCodingPage />} />
+          <Route path="student/aptitude" element={<StudentAptitudePage />} />
+          <Route path="student/career" element={<StudentCareerAssistantPage />} />
           <Route path="student/chatbot" element={<ChatbotPage />} />
 
           {/* Recruiter portal */}

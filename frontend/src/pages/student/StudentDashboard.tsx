@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AcademicCapIcon, ChatBubbleLeftRightIcon, CodeBracketIcon, LightBulbIcon, MapIcon, PresentationChartLineIcon } from '@heroicons/react/24/outline';
 
 import { JobATSAnalysis, fetchJobMatches, fetchMyResume } from '../../api/student';
+import DashboardCard from '../../components/DashboardCard';
 import { PageHeader } from '../../components/PageHeader';
 import { ScoreRing } from '../../components/ScoreRing';
 import { StatusMessage } from '../../components/StatusMessage';
@@ -31,7 +33,7 @@ export default function StudentDashboard() {
     <section className="space-y-6">
       <PageHeader
         title="Student Dashboard"
-        description="Upload your resume, check ATS scores against recruiter jobs, and discover roles that fit your profile."
+        description="Track your resume score, explore roles, and jump into practice modules without leaving the student portal."
       />
       <StatusMessage type="error" message={error} />
 
@@ -78,10 +80,43 @@ export default function StudentDashboard() {
         </div>
       )}
 
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <DashboardCard
+          title="Company DSA"
+          description="Practice company-specific DSA questions with LeetCode links and curated problem sets."
+          icon={<CodeBracketIcon className="h-7 w-7" />}
+          to="/student/dsa"
+        />
+        <DashboardCard
+          title="Aptitude Prep"
+          description="Attempt timed quizzes and train against a large aptitude bank of 1,000+ questions per topic."
+          icon={<AcademicCapIcon className="h-7 w-7" />}
+          to="/student/aptitude"
+        />
+        <DashboardCard
+          title="Career Assistant"
+          description="Generate a roadmap, close skill gaps, and plan your next move."
+          icon={<MapIcon className="h-7 w-7" />}
+          to="/student/career"
+        />
+        <DashboardCard
+          title="Interview Feedback"
+          description="Review recent mock interview history and improvement areas."
+          icon={<PresentationChartLineIcon className="h-7 w-7" />}
+          to="/student/interviews"
+        />
+        <DashboardCard
+          title="Learning Signals"
+          description="Use progress-aware prompts to keep your preparation focused."
+          icon={<LightBulbIcon className="h-7 w-7" />}
+          to="/student/career"
+        />
+      </div>
+
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <QuickLink to="/student/ats" label="Check ATS score" />
         <QuickLink to="/student/roles" label="Suggested job roles" />
-        <QuickLink to="/student/chatbot" label="Resume coach AI" />
+        <QuickLink to="/student/dsa" label="Company DSA" />
         <QuickLink to="/student/resume" label="Manage resume" />
       </div>
     </section>
