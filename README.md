@@ -225,46 +225,56 @@ ATS_GENAI/
 
 ```mermaid
 flowchart LR
-	subgraph Frontend
-		F[React + Vite UI]
-	end
 
-	subgraph Backend[FastAPI Backend]
-		API[/api/v1 (APIRouter)]
-		AuthService[Auth Service]
-		ResumeService[Resume & Parser]
-		EmbeddingSvc[Embedding Service]
-		ChatbotSvc[Chatbot / Prompt Engine]
-		RecoSvc[Recommendation Service]
-		VectorMgr[Vector Index Manager]
-	end
+    subgraph Frontend
+        F["React + Vite UI"]
+    end
 
-	subgraph Data[Persistence & External]
-		Mongo[(MongoDB)]
-		OpenAI[(OpenAI / LLM)]
-		Piston[(Piston - optional)]
-	end
+    subgraph Backend["FastAPI Backend"]
+        API["API Router"]
+        AuthService["Auth Service"]
+        ResumeService["Resume Parser Service"]
+        EmbeddingSvc["Embedding Service"]
+        ChatbotSvc["Chatbot Engine"]
+        RecoSvc["Recommendation Service"]
+        VectorMgr["Vector Index Manager"]
+    end
 
-	F -->|HTTP /api| API
-	API --> AuthService
-	API --> ResumeService
-	API --> ChatbotSvc
-	API --> RecoSvc
-	ResumeService --> EmbeddingSvc
-	EmbeddingSvc --> Mongo
-	EmbeddingSvc --> VectorMgr
-	VectorMgr --> Mongo
-	RecoSvc --> VectorMgr
-	ChatbotSvc --> EmbeddingSvc
-	ChatbotSvc --> OpenAI
-	ChatbotSvc --> Mongo
-	AuthService --> Mongo
-	API -->|startup tasks| VectorMgr
-	API -->|startup seed| Mongo
-	ChatbotSvc --> Piston
+    subgraph Data["Persistence & External Services"]
+        Mongo[("MongoDB")]
+        OpenAI[("OpenAI / LLM")]
+        Piston[("Piston API Optional")]
+    end
 
-	style Backend fill:#f8fafc,stroke:#cbd5e1
-	style Data fill:#fff7ed,stroke:#f59e0b
+    F -->|"HTTP API Calls"| API
+
+    API --> AuthService
+    API --> ResumeService
+    API --> ChatbotSvc
+    API --> RecoSvc
+
+    ResumeService --> EmbeddingSvc
+
+    EmbeddingSvc --> Mongo
+    EmbeddingSvc --> VectorMgr
+
+    VectorMgr --> Mongo
+
+    RecoSvc --> VectorMgr
+
+    ChatbotSvc --> EmbeddingSvc
+    ChatbotSvc --> OpenAI
+    ChatbotSvc --> Mongo
+
+    AuthService --> Mongo
+
+    API -->|"Startup Tasks"| VectorMgr
+    API -->|"Seed Data"| Mongo
+
+    ChatbotSvc --> Piston
+
+    style Backend fill:#f8fafc,stroke:#cbd5e1
+    style Data fill:#fff7ed,stroke:#f59e0b
 ```
 
 
