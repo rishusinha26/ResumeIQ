@@ -277,6 +277,176 @@ flowchart LR
     style Data fill:#fff7ed,stroke:#f59e0b
 ```
 
+## working flow
+
+```mermaid
+flowchart TD
+
+    A[User Registers/Login] --> B{User Type}
+
+    B -->|Student| C[Student Dashboard]
+    B -->|Recruiter| D[Recruiter Dashboard]
+    B -->|Admin| E[Admin Panel]
+
+    %% STUDENT FLOW
+
+    C --> F[Upload Resume]
+
+    F --> G[Resume Parsing]
+    G --> H[Skill Extraction]
+    H --> I[Generate Embeddings]
+    I --> J[Store in Vector DB]
+
+    J --> K[AI Resume Analysis]
+    K --> L[ATS Resume Score]
+
+    L --> M[Job Recommendation Engine]
+    M --> N[Recommended Jobs]
+
+    %% MOCK INTERVIEW FLOW
+
+    C --> O[Start Mock Interview]
+    O --> P[AI Generates Questions]
+    P --> Q[Candidate Answers]
+    Q --> R[LLM Evaluation]
+    R --> S[Interview Feedback & Score]
+
+    %% CODING FLOW
+
+    C --> T[Open Coding Platform]
+    T --> U[Write Code in Monaco Editor]
+    U --> V[Send Code to Judge0]
+    V --> W[Code Execution]
+    W --> X[Test Case Evaluation]
+    X --> Y[Coding Score]
+
+    %% APTITUDE FLOW
+
+    C --> Z[Aptitude Test]
+    Z --> A1[Quiz Evaluation]
+    A1 --> A2[Performance Analytics]
+
+    %% CAREER AI FLOW
+
+    C --> A3[Ask AI Career Assistant]
+    A3 --> A4[RAG + LLM Processing]
+    A4 --> A5[Career Roadmap]
+
+    %% RECRUITER FLOW
+
+    D --> B1[Create Job Posting]
+    B1 --> B2[Generate Job Embeddings]
+
+    B2 --> B3[Candidate Recommendation Engine]
+    B3 --> B4[Top Matching Candidates]
+
+    B4 --> B5[Recruiter Analytics]
+
+    %% FINAL
+
+    S --> C
+    Y --> C
+    A2 --> C
+    A5 --> C
+```
+
+---
+
+# AI Recommendation Engine Flow
+
+```mermaid
+flowchart LR
+
+    A[Resume Text] --> B[Embedding Generation]
+    C[Job Description] --> D[Embedding Generation]
+
+    B --> E[Vector Database]
+    D --> E
+
+    E --> F[Cosine Similarity]
+
+    F --> G[Rank Candidates]
+    F --> H[Recommend Jobs]
+
+    G --> I[Recruiter Dashboard]
+    H --> J[Student Dashboard]
+```
+
+---
+
+# AI Mock Interview Flow
+
+```mermaid
+flowchart TD
+
+    A[Select Interview Role]
+    --> B[LLM Generates Questions]
+
+    B --> C[Student Answers]
+
+    C --> D[AI Evaluation Engine]
+
+    D --> E[Communication Analysis]
+    D --> F[Technical Analysis]
+    D --> G[Confidence Analysis]
+
+    E --> H[Final Interview Score]
+    F --> H
+    G --> H
+
+    H --> I[AI Feedback Report]
+```
+
+---
+
+# Coding Platform Flow
+
+```mermaid
+flowchart TD
+
+    A[Open Coding Problem]
+    --> B[Write Code in Monaco Editor]
+
+    B --> C[Run Code]
+
+    C --> D[Backend API]
+
+    D --> E[Judge0 API]
+
+    E --> F[Compile & Execute]
+
+    F --> G[Return Output]
+
+    G --> H[Test Case Validation]
+
+    H --> I[Accepted / Failed]
+
+    I --> J[Store Submission]
+```
+
+---
+
+# RAG Career Assistant Flow
+
+```mermaid
+flowchart TD
+
+    A[User Query]
+    --> B[Convert to Embeddings]
+
+    B --> C[Search Vector Database]
+
+    C --> D[Retrieve Relevant Context]
+
+    D --> E[LLM Prompt Builder]
+
+    E --> F[GPT/Gemini Response]
+
+    F --> G[Career Guidance Output]
+```
+
+---
+
 
 ## Future Goals
 
