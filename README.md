@@ -303,22 +303,6 @@ flowchart TD
     L --> M[Job Recommendation Engine]
     M --> N[Recommended Jobs]
 
-    %% MOCK INTERVIEW FLOW
-
-    C --> O[Start Mock Interview]
-    O --> P[AI Generates Questions]
-    P --> Q[Candidate Answers]
-    Q --> R[LLM Evaluation]
-    R --> S[Interview Feedback & Score]
-
-    %% CODING FLOW
-
-    C --> T[Open Coding Platform]
-    T --> U[Write Code in Monaco Editor]
-    U --> V[Send Code to Judge0]
-    V --> W[Code Execution]
-    W --> X[Test Case Evaluation]
-    X --> Y[Coding Score]
 
     %% APTITUDE FLOW
 
