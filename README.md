@@ -303,6 +303,22 @@ flowchart TD
     L --> M[Job Recommendation Engine]
     M --> N[Recommended Jobs]
 
+    %% MOCK INTERVIEW FLOW
+
+    C --> O[Start Mock Interview]
+    O --> P[AI Generates Questions]
+    P --> Q[Candidate Answers]
+    Q --> R[LLM Evaluation]
+    R --> S[Interview Feedback & Score]
+
+    %% CODING FLOW
+
+    C --> T[Open Coding Platform]
+    T --> U[Write Code in Monaco Editor]
+    U --> V[Send Code to Judge0]
+    V --> W[Code Execution]
+    W --> X[Test Case Evaluation]
+    X --> Y[Coding Score]
 
     %% APTITUDE FLOW
 
@@ -358,57 +374,8 @@ flowchart LR
 
 ---
 
-# AI Mock Interview Flow
 
-```mermaid
-flowchart TD
 
-    A[Select Interview Role]
-    --> B[LLM Generates Questions]
-
-    B --> C[Student Answers]
-
-    C --> D[AI Evaluation Engine]
-
-    D --> E[Communication Analysis]
-    D --> F[Technical Analysis]
-    D --> G[Confidence Analysis]
-
-    E --> H[Final Interview Score]
-    F --> H
-    G --> H
-
-    H --> I[AI Feedback Report]
-```
-
----
-
-# Coding Platform Flow
-
-```mermaid
-flowchart TD
-
-    A[Open Coding Problem]
-    --> B[Write Code in Monaco Editor]
-
-    B --> C[Run Code]
-
-    C --> D[Backend API]
-
-    D --> E[Judge0 API]
-
-    E --> F[Compile & Execute]
-
-    F --> G[Return Output]
-
-    G --> H[Test Case Validation]
-
-    H --> I[Accepted / Failed]
-
-    I --> J[Store Submission]
-```
-
----
 
 # RAG Career Assistant Flow
 
@@ -430,7 +397,6 @@ flowchart TD
 ```
 
 ---
-
 
 ## Future Goals
 
