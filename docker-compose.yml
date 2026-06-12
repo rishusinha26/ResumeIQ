@@ -17,6 +17,8 @@ services:
       - "2000:2000"
     environment:
       - PISTON_API_PORT=2000
+    volumes:
+      - piston_data:/piston
 
   backend:
     build:
@@ -26,7 +28,7 @@ services:
     env_file:
       - .env
     environment:
-      - MONGO_URI=${MONGO_URI}
+      - MONGO_URI=mongodb://mongo:27017/ats_genai
       - MONGO_DB=${MONGO_DB}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
       - JWT_ALGORITHM=${JWT_ALGORITHM}
@@ -35,7 +37,7 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - SPACY_MODEL=${SPACY_MODEL}
       - SENTENCE_TRANSFORMER_MODEL=${SENTENCE_TRANSFORMER_MODEL}
-      - PISTON_API_URL=${PISTON_API_URL}
+      - PISTON_API_URL=http://piston:2000/api/v2
     ports:
       - "8000:8000"
     depends_on:
@@ -51,6 +53,7 @@ services:
       - .env
     environment:
       - VITE_API_BASE_URL=${FRONTEND_API_BASE_URL}
+      - VITE_API_PROXY_TARGET=http://backend:8000
     ports:
       - "5173:5173"
     depends_on:
@@ -58,3 +61,4 @@ services:
 
 volumes:
   mongo_data:
+  piston_data:
